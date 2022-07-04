@@ -9,17 +9,17 @@ Vagrant.configure("2") do |config|
   end  
 
 
-  config.vm.define "one" do |debian|
+  config.vm.define "debianone" do |debian|
     debian.vm.hostname = "debian-1"
     debian.vm.network :private_network, ip: "192.168.56.1"
   end 
  
-  config.vm.define "two" do |debian|
+  config.vm.define "debiantwo" do |debian|
     debian.vm.hostname = "debian-2"
     debian.vm.network :private_network, ip: "192.168.56.2"
   end 
  
- config.vm.define "three" do |debian|
+ config.vm.define "debianthree" do |debian|
     debian.vm.hostname = "debian-3"
     debian.vm.network :private_network, ip: "192.168.56.3"
   end 
