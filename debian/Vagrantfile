@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bullseye64"
+  # vagrant plugin install vagrant-libvirt 
+  config.vagrant.plugins = ["vagrant-libvirt"] 
+  config.vm.provider :libvirt do |l|
+    l.memory = 1024
+  end  
+
+
+  config.vm.define "one" do |debian|
+    debian.vm.hostname = "debian-1"
+    debian.vm.network :private_network, ip: "192.168.56.1"
+  end 
+ 
+  config.vm.define "two" do |debian|
+    debian.vm.hostname = "debian-2"
+    debian.vm.network :private_network, ip: "192.168.56.2"
+  end 
+ 
+ config.vm.define "three" do |debian|
+    debian.vm.hostname = "debian-3"
+    debian.vm.network :private_network, ip: "192.168.56.3"
+  end 
+end
