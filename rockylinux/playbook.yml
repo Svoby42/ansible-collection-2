@@ -1,0 +1,39 @@
+---
+- name: Install nginx
+  hosts: all
+  become: yes
+
+  handlers:
+    - name: Restart nginx
+      service:
+        become: yes
+        name: nginx
+        state: restarted
+
+  tasks:
+    - name: Install nginx
+      package:
+        name: nginx
+        state: latest
+        update_cache: true
+      notify: Restart nginx
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
+    - name: start firewalld
+      service:
+              name: firewalld
+              state: started
+              enabled: yes
+
+    - name: Permit HTTP traffic
+      firewalld:
+        zone: public
+        port: 80/tcp
+        permanent: true
+        state: enabled
+      become: yes
+...
