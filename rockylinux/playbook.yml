@@ -13,7 +13,6 @@
       service:
         become: yes
         name: nginx
-        enabled: yes
         state: restarted
 
   tasks:
@@ -37,6 +36,7 @@
       service:
         name: nginx
         state: started
+        enabled: yes
 
     - name: Copy nginx config file
       template:
