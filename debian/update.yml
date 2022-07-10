@@ -1,5 +1,5 @@
 ---
-- hosts: debs
+- hosts: all
   become: yes
 
   pre_tasks:

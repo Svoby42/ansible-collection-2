@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+
+  tasks:
+    - name: Install NTP
+      apt: name=ntp state=present
+
+    - name: Start NTP
+      service: name=ntp state=started enabled=yes
+
+    - name: Install packages
+      apt:
+        state: present
+        name:
+          - git
+          - curl
+          - vim
+          - wget
+          - unzip
+          - neofetch
+          - net-tools
+        force_apt_get: yes
+      tags:
+       - packages
+...
