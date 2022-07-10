@@ -1,8 +1,8 @@
-[vagrant]
-debianone 	ansible_host=192.168.56.10 ansible_private_key_file=.vagrant/machines/debianone/libvirt/private_key
-debiantwo	ansible_host=192.168.56.20 ansible_private_key_file=.vagrant/machines/debiantwo/libvirt/private_key
-debianthree	ansible_host=192.168.56.30 ansible_private_key_file=.vagrant/machines/debianthree/libvirt/private_key
+[debs]
+debian1 	ansible_host=192.168.56.10 ansible_private_key_file=.vagrant/machines/debian1/libvirt/private_key
+debian2		ansible_host=192.168.56.20 ansible_private_key_file=.vagrant/machines/debian2/libvirt/private_key
+debian3		ansible_host=192.168.56.30 ansible_private_key_file=.vagrant/machines/debian3/libvirt/private_key
 
-[vagrant:vars]
+[debs:vars]
 ansible_user=vagrant
 
