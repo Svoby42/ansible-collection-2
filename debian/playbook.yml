@@ -1,0 +1,52 @@
+---
+- hosts: all
+  become: yes
+
+  pre_tasks:
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+
+  vars_prompt:
+    - name: password
+      prompt: Enter password for sudo accounts
+      private: yes
+      encrypt: sha512_crypt
+
+  tasks:
+    - name: Upgrade apt packages
+      apt: upgrade=dist force_apt_get=yes autoremove=yes
+      tags:
+        - dist
+
+    - name: Check if reboot is needed
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required get_md5=no
+
+    - name: Reboot if kernel updated
+      reboot:
+        msg: "Reboot for kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists
+      
+  post_tasks:
+    - name: Add some users
+      user:
+        name: "{{ item.name }}"
+        password: "{{ password }}"
+        state: present
+        shell: /bin/bash
+        groups: "{{ item.groups }}"
+      loop:
+        - { name: 'svoby', groups: 'sudo' }
+        - { name: 'petan', groups: 'sudo' }
+
+- hosts: all
+  become: yes
+  roles:
+    - basic
+
+...

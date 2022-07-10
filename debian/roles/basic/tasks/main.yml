@@ -1,0 +1,20 @@
+---
+- name: Install NTP
+  apt: name=ntp state=present
+
+- name: Start NTP
+  service: name=ntp state=started enabled=yes
+
+- name: Install packages
+  apt:
+      state: present
+      name:
+        - git
+        - curl
+        - vim
+        - wget
+        - unzip
+        - neofetch
+        - net-tools
+      force_apt_get: yes
+...

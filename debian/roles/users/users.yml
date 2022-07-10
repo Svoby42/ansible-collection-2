@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: yes
+
+  vars_prompt:
+    - name: password
+      prompt: Enter root password
+      encrypt: sha512_crypt
+
+  tasks:
+    - name: Add some users
+      user:
+        name: "{{ item.name }}"
+        password: "{{ password }}"
+        state: present
+        shell: /bin/bash
+        groups: "{{ item.groups }}"
+      loop:
+        - { name: 'svoby', groups: 'sudo' }
+        - { name: 'petan', groups: 'sudo' }
+...
